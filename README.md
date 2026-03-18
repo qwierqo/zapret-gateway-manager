@@ -75,3 +75,30 @@ chmod +x scripts/zgm.sh
 
 Собственный код этого репозитория распространяется под лицензией MIT.
 Смотри `LICENSE` и `NOTICE.md`.
+
+## Status
+
+Project is currently in early scaffold stage.
+
+The initial focus is:
+- Linux gateway mode
+- manual profile handling
+- state storage
+- service health checks
+- future autotuning
+
+## Roadmap
+
+### v0.1.0
+- repository scaffold
+- manual profile selection
+- state storage
+
+### v0.2.0
+- basic service health checks
+- logging improvements
+
+### v0.3.0
+- automatic profile comparison
+- profile scoring
+- best-profile persistence
