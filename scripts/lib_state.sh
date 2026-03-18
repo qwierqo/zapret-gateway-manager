@@ -11,10 +11,15 @@ ensure_state_dir() {
     [ -d "$STATE_DIR" ] || mkdir -p "$STATE_DIR"
 }
 
+save_last_action() {
+    action_name="$1"
+    printf "%s\n" "$action_name" > "$LAST_ACTION_FILE"
+}
+
 save_active_profile() {
     profile_path="$1"
     printf "%s\n" "$profile_path" > "$ACTIVE_PROFILE_FILE"
-    printf "%s\n" "profile_selected" > "$LAST_ACTION_FILE"
+    save_last_action "profile_selected"
 }
 
 get_active_profile_path() {
@@ -65,7 +70,9 @@ show_state() {
     fi
 
     if [ -f "$LAST_CHECK_RESULTS_FILE" ]; then
-        echo
         echo "Файл результатов:  $LAST_CHECK_RESULTS_FILE"
     fi
+
+    echo
+    show_backend_runtime_summary
 }
