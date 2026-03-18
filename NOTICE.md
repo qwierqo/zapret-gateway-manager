@@ -1,11 +1,22 @@
-# NOTICE
+# Notices
 
-This repository is an independent wrapper/manager project built to work with the upstream `zapret` toolkit.
+`zapret-gateway-manager` is an independent management-layer project designed to operate on top of anti-DPI backends from the `zapret` ecosystem.
 
-Upstream project:
+Primary upstream reference:
+
 - https://github.com/bol-van/zapret
 
-Important notes:
-- This repository does not claim authorship of the upstream `zapret` project.
-- If upstream code or substantial adapted fragments are added later, corresponding copyright and license notices must be preserved.
-- The current repository is intended to contain original code for profile management, state handling, checks, logging and automation.
+Future backend direction may also consider:
+
+- https://github.com/bol-van/zapret2
+
+This repository contains original code related to:
+
+- gateway-side orchestration;
+- profile handling;
+- state management;
+- service checks;
+- logging;
+- future local API and web control layers.
+
+If upstream code or substantial adapted fragments are incorporated into this repository, corresponding notices and license requirements must be preserved.
