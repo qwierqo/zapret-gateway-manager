@@ -2,6 +2,10 @@
 
 ACTIVE_PROFILE_FILE="$STATE_DIR/active_profile.state"
 LAST_ACTION_FILE="$STATE_DIR/last_action.state"
+LAST_CHECK_STATUS_FILE="$STATE_DIR/last_check_status.state"
+LAST_CHECK_TIME_FILE="$STATE_DIR/last_check_time.state"
+LAST_CHECK_DETAILS_FILE="$STATE_DIR/last_check_details.state"
+LAST_CHECK_RESULTS_FILE="$STATE_DIR/last_check_results.txt"
 
 ensure_state_dir() {
     [ -d "$STATE_DIR" ] || mkdir -p "$STATE_DIR"
@@ -38,9 +42,30 @@ show_state() {
         echo "Активный профиль пока не выбран."
     fi
 
+    echo
+
     if [ -f "$LAST_ACTION_FILE" ]; then
         echo "Последнее действие: $(cat "$LAST_ACTION_FILE")"
     else
         echo "Последнее действие: не записано"
+    fi
+
+    if [ -f "$LAST_CHECK_STATUS_FILE" ]; then
+        echo "Последняя проверка: $(cat "$LAST_CHECK_STATUS_FILE")"
+    else
+        echo "Последняя проверка: не запускалась"
+    fi
+
+    if [ -f "$LAST_CHECK_TIME_FILE" ]; then
+        echo "Время проверки:    $(cat "$LAST_CHECK_TIME_FILE")"
+    fi
+
+    if [ -f "$LAST_CHECK_DETAILS_FILE" ]; then
+        echo "Детали проверки:   $(cat "$LAST_CHECK_DETAILS_FILE")"
+    fi
+
+    if [ -f "$LAST_CHECK_RESULTS_FILE" ]; then
+        echo
+        echo "Файл результатов:  $LAST_CHECK_RESULTS_FILE"
     fi
 }

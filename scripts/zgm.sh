@@ -4,20 +4,24 @@ BASE_DIR="$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)"
 SCRIPTS_DIR="$BASE_DIR/scripts"
 PROFILES_DIR="$BASE_DIR/profiles"
 STATE_DIR="$BASE_DIR/state"
+LISTS_DIR="$BASE_DIR/lists"
 
 . "$SCRIPTS_DIR/lib_ui.sh"
 . "$SCRIPTS_DIR/lib_profiles.sh"
 . "$SCRIPTS_DIR/lib_state.sh"
 . "$SCRIPTS_DIR/lib_log.sh"
+. "$SCRIPTS_DIR/lib_targets.sh"
+. "$SCRIPTS_DIR/lib_checks.sh"
 
 main_menu() {
     while true; do
         ui_header "zapret-gateway-manager"
         echo "1) Показать профили"
         echo "2) Выбрать профиль"
-        echo "3) Показать текущее состояние"
-        echo "4) Показать последние записи лога"
-        echo "5) Выход"
+        echo "3) Запустить standard checks"
+        echo "4) Показать текущее состояние"
+        echo "5) Показать последние записи лога"
+        echo "6) Выход"
         echo
         printf "Выбери пункт: "
         read -r choice
@@ -32,16 +36,19 @@ main_menu() {
                 select_profile_flow
                 ;;
             3)
+                run_standard_checks_flow
+                ;;
+            4)
                 ui_header "Текущее состояние"
                 show_state
                 ui_pause
                 ;;
-            4)
+            5)
                 ui_header "Последние записи лога"
                 show_last_logs 20
                 ui_pause
                 ;;
-            5)
+            6)
                 log_info "Программа завершена пользователем"
                 echo "Выход."
                 exit 0
@@ -89,7 +96,32 @@ select_profile_flow() {
     echo "Check set:  $CHECK_SET"
     echo "Priority:   $PRIORITY"
     echo
-    echo "Применение backend-логики будет добавлено следующим этапом."
+    echo "Реальное применение backend-логики будет добавлено следующим этапом."
+    ui_pause
+}
+
+run_standard_checks_flow() {
+    ui_header "Standard checks"
+
+    if active_path="$(get_active_profile_path 2>/dev/null)"; then
+        if ! load_profile "$active_path"; then
+            ui_error "Активный профиль найден, но не загрузился"
+            log_error "Checks: не удалось загрузить активный профиль: $active_path"
+            ui_pause
+            return
+        fi
+    else
+        ui_error "Сначала выбери профиль"
+        log_error "Checks запущены без активного профиля"
+        ui_pause
+        return
+    fi
+
+    ui_info "Активный профиль: $NAME"
+    ui_info "Backend: $BACKEND"
+    echo
+
+    run_standard_checks
     ui_pause
 }
 
