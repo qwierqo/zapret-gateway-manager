@@ -1,0 +1,5 @@
+# example exclude list
+# domains here should not be processed by the future automation layer
+mail.ru
+vk.com
+yandex.ru

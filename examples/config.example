@@ -1,0 +1,4 @@
+# Example future config
+INSTALL_MODE="manual"
+LOG_LEVEL="info"
+DEFAULT_PROFILE="basic"
